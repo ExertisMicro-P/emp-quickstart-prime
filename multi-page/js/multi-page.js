@@ -10,7 +10,8 @@ var currentUser = whoami();
 function initContent() {
 
 	var landingPage = querystring_lookup('p');
-	landingPage = ((typeof (landingPage) != "undefined" && landingPage !== null) ? landingPage : "home");
+	landingPage = ((typeof landingPage !== "undefined" && landingPage !== null) ? landingPage : "home");
+	
 	ajaxMSPage(setMSPage(landingPage), ajaxWrapper);		// check QS & load content
 
 	// prefix image paths outside ajax area
@@ -25,7 +26,7 @@ function initContent() {
 		$(this).attr("href", thisHREF);																													// update path
 		if ($(this).hasClass('act')) {																													// add click through event
 			$(this).on('click', function () {
-				createGAEvent(projectName, 'Click-Though', $(this).attr("href"), inSandbox);				// analytics clickthrough event
+				createGAEvent(projectName, 'Click-Through', $(this).attr("href"), inSandbox);				// analytics clickthrough event
 			});
 		}
 	});
@@ -40,7 +41,8 @@ function initContent() {
 // look in querysting first to jump to specific content, defaults to home.html
 //
 function setMSPage(requestedPage) {
-	var targetPage = ((typeof (requestedPage) != "undefined" && requestedPage !== null) ? requestedPage : "home");
+
+	var targetPage = ((typeof (requestedPage) !== "undefined" && requestedPage !== null) ? requestedPage : "home");
 	var contentURL = prefixURL + targetPage + '.html';
 
 	// analytics event
@@ -52,6 +54,7 @@ function setMSPage(requestedPage) {
 // loads the content on an html page to the target div
 //
 function ajaxMSPage(ajaxURL, targetDiv) {
+	
 	$.ajax({
 		global: true,
 		cache: false,																																// Change for live
@@ -60,7 +63,8 @@ function ajaxMSPage(ajaxURL, targetDiv) {
 		success: function (data) {
 			$('#ms-loading').fadeIn();
 			$(targetDiv).html(data);																									// load content area
-			initPage();																																// call function included in ajaxed content, used to assign plugins, listeners etc.
+			
+			initPage();																															// call function included in ajaxed content, used to assign plugins, listeners etc.
 
 			// prefix image paths
 			$(targetDiv).find('img').each(function() {
@@ -88,14 +92,10 @@ function ajaxMSPage(ajaxURL, targetDiv) {
 // listener for navigation, if the link has the appropriate data value the ajax load is called
 //
 $(contentWrapper).on('click', 'a', function (e) {
-	if ($(this).data('target-content') != undefined) {
 
-		if ($(this).hasClass = "external") {
-			ajaxMSPage(setMSPage($(this).data('target-content')), '#ms-content');
-		}
-		else {
-			ajaxMSPage(setMSPage($(this).data('target-content')), '#ms-content');
-		}
+	if (typeof($(this).data('target-content')) !== 'undefined') {
+
+		ajaxMSPage(setMSPage($(this).data('target-content')), '#ms-content');
 
 		// flag active menu link
 		if ($(this).parents('div:first').attr('id') == 'ms-nav') {

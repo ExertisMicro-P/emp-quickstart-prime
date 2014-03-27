@@ -13,7 +13,7 @@ jQuery.fn.xySlider = function() {
 		//plugin is being re run due to redraw triggering doc ready script
 	} else {
 
-		var options = (typeof arguments[0] != 'object') ? {} : arguments[0];
+		var options = (typeof arguments[0] !== 'object') ? {} : arguments[0];
 		var ID = $(this).attr('id');
 
 		$(this).addClass('xy-slider');
@@ -51,7 +51,7 @@ jQuery.fn.xySlider = function() {
 
 		//simulate navigation within slider click
 		var selected_slide = getQSVars('slide');
-		if (selected_slide != '' && typeof(selected_slide) != 'undefined') {
+		if (selected_slide != '' && typeof selected_slide !== 'undefined') {
 			if ($('#slide-' + selected_slide).length > 0) {
 				$('#slide-' + selected_slide + '.slide-nav').trigger('click');				// move to slide within section
 			}
@@ -212,7 +212,7 @@ jQuery.fn.xySlider_changeSlide = function(slide_int,target_slider,slide_dimensio
 
 	// analytics event
 	var target_slide_name = $('#' + slider_menu_id + '	#slide-' + slide_int).html();
-	if (typeof(target_slide_name) != "undefined" && target_slide_name !== null) {
+	if (typeof target_slide_name !== "undefined" && target_slide_name !== null) {
 		createGAEvent(projectName, 'Load-Page', target_slide_name, inSandbox);
 	}
 };

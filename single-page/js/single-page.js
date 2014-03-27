@@ -43,8 +43,8 @@ function initPage() {
 		createGAEvent(projectName, "View-Item", $(this).attr('id'), inSandbox);
 	});
 
-	var landingPage = querystring_lookup('ms-p');
-	landingPage = ((typeof (landingPage) != "undefined" && landingPage !== null) ? landingPage : "home");
+	var landingPage = querystring_lookup('p');
+	landingPage = ((typeof landingPage !== "undefined" && landingPage !== null) ? landingPage : "home");
 	createGAEvent(projectName, 'Landing-Page', landingPage, inSandbox);																// analytics landing event
 
 }
